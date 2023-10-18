@@ -1,0 +1,82 @@
+<style>
+    form {
+
+        background: aquamarine;
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul>li {
+        padding: 0.5rem 1rem;
+    }
+
+    ul>li :nth-child(odd) {
+        background: rgb(255, 179, 179);
+        text-align: right;
+        font-size: italic;
+        font-weight: 600;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>CHAT SinTabu</h1>
+        </div>
+    </div>
+
+
+    <ul class=" list-group">
+
+    </ul>
+    <form action="">
+        <input type="text" placeholder="Ingreswar mensaje">
+        <button type="submit">Enviar</button>
+    </form>
+
+
+</body>
+
+<!--
+<script src="http://localhost:3000/socket.io/socket.io.js">
+</script>
+-->
+<script src="/socket.io/socket.io.js">
+
+</script>
+<script>
+
+    let socket = io()
+    const form = document.querySelector('form')
+    const input = document.querySelector('input')
+    let mensajes = document.querySelector('ul')
+    form.addEventListener('submit', (e) => {
+
+        e.preventDefault()
+        if (input.value) {
+            socket.emit('chat', nombre + ":" + input.value)
+            //socket.emit('chat', { message: input.value, userId: userId });
+            input.value = ''
+        }
+    })
+
+    socket.on('chat', (msg) => {
+        let item = document.createElement('li')
+        item.textContent = msg
+        mensajes.appendChild(item)
+        window.scroll(0, document.body.scrollHeight)
+    })
+</script>
