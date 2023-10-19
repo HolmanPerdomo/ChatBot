@@ -67,7 +67,8 @@
 
         e.preventDefault()
         if (input.value) {
-            socket.emit('chat', { message: input.value, userId: userId });
+            socket.emit('chat', input.value)
+            //socket.emit('chat', { message: input.value, userId: userId });
             input.value = ''
         }
     })
